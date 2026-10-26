@@ -1,4 +1,4 @@
-# Taller 3 — PARRY · Duelo de reacción
+# Taller 3 — PARRYZ
 
 Prototipo jugable de **juego de reacción y ritmo** centrado en una única
 mecánica: el **parry** (desvío de ataques). El rival telegrafía un golpe y el
