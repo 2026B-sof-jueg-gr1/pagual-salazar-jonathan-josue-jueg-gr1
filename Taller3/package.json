@@ -1,0 +1,20 @@
+{
+  "name": "taller3-parry-duel",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Prototipo de juego de reacción y ritmo centrado en la mecánica de Parry (Phaser 3 + TypeScript)",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "publish:pages": "npm run build && node scripts/publish-root.mjs"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}

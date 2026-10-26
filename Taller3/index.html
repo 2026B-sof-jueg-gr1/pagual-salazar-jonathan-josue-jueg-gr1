@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#07070f" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta
+      name="description"
+      content="PARRY — prototipo de juego de reacción y ritmo centrado en el desvío de ataques. Phaser 3 + TypeScript."
+    />
+    <title>PARRY // Duelo de Reacción</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg-deep: #05050c;
+        --bg-glow: #1a1130;
+        --accent: #46e3c8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: radial-gradient(120% 90% at 50% 0%, var(--bg-glow) 0%, var(--bg-deep) 62%, #000 100%);
+        font-family: 'Rajdhani', 'Segoe UI', system-ui, sans-serif;
+        color: #cfd6e6;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      #app {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+      }
+
+      /* El canvas de Phaser se escala con Scale.FIT; aquí solo lo encuadramos. */
+      #game canvas {
+        display: block;
+        border-radius: 6px;
+        box-shadow:
+          0 0 0 1px rgba(120, 140, 200, 0.18),
+          0 30px 90px -20px rgba(0, 0, 0, 0.95),
+          0 0 120px -40px rgba(70, 227, 200, 0.35);
+        cursor: crosshair;
+      }
+
+      #loader {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        letter-spacing: 0.4em;
+        font-size: 13px;
+        text-transform: uppercase;
+        color: rgba(140, 160, 200, 0.7);
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+
+      #loader.hidden {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="game"></div>
+      <div id="loader">cargando duelo…</div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

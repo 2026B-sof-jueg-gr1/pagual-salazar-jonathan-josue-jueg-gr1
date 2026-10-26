@@ -1,0 +1,8 @@
+# Dependencias y artefactos de build del proyecto Taller3
+node_modules/
+Taller3/node_modules/
+Taller3/dist/
+Taller3/.vite/
+*.local
+.DS_Store
+Thumbs.db
