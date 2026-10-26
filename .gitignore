@@ -6,3 +6,6 @@ Taller3/.vite/
 *.local
 .DS_Store
 Thumbs.db
+
+# Datos locales de la herramienta
+.workbuddy-ai/
