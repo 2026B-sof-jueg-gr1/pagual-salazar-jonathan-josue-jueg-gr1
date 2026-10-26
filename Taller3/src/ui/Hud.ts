@@ -1,8 +1,15 @@
 import Phaser from 'phaser';
-import { VIEW } from '../config/GameConfig';
+import { GAME, VIEW } from '../config/GameConfig';
 import { TEX } from '../gfx/TextureFactory';
 import { COLORS, FONT } from './theme';
 import type { RunStats } from '../types';
+
+/** Separa las letras con espacios (efecto de subtítulo tipo cartel). */
+const spaced = (text: string): string =>
+  text
+    .split(' ')
+    .map((word) => word.split('').join(' '))
+    .join('   ');
 
 /**
  * Toda la interfaz superpuesta: marcador, avisos centrales, pantalla de
@@ -203,7 +210,7 @@ export class Hud {
       .setBlendMode(Phaser.BlendModes.ADD);
 
     const title = this.scene.add
-      .text(cx, cy - 150, 'PARRY', {
+      .text(cx, cy - 150, GAME.TITLE, {
         fontFamily: FONT.title,
         fontSize: '112px',
         color: '#f2fbff',
@@ -211,10 +218,16 @@ export class Hud {
       })
       .setOrigin(0.5);
 
+    // Si el nombre es más largo que el original, se encoge para no salirse.
+    const MAX_TITLE_WIDTH = 900;
+    if (title.width > MAX_TITLE_WIDTH) {
+      title.setScale(MAX_TITLE_WIDTH / title.width);
+    }
+
     const rule = this.scene.add.rectangle(cx, cy - 74, 320, 2, COLORS.player, 0.7);
 
     const subtitle = this.scene.add
-      .text(cx, cy - 46, 'D U E L O   D E   R E A C C I Ó N', {
+      .text(cx, cy - 46, spaced(GAME.SUBTITLE), {
         fontFamily: FONT.ui,
         fontSize: '19px',
         color: COLORS.playerText,

@@ -46,6 +46,9 @@ estados), `gfx/`, `ui/`, `audio/` y `config/`. Todo el balance
 `ENEMY_MAX_HP`, `FAILED_PARRY_LOCKOUT`…) está expuesto en
 `Taller3/src/config/GameConfig.ts`.
 
+**Nombre del juego:** `GAME.TITLE` y `GAME.SUBTITLE` en ese mismo archivo
+(portada). El título de la pestaña está en `Taller3/index.html`.
+
 ---
 
 ## Ejecutar en local

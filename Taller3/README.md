@@ -100,6 +100,27 @@ Si pulsas fuera → `FAILED_PARRY_LOCKOUT` (castigo anti-spam) y el golpe entra.
 
 ---
 
+## Cambiar el nombre del juego
+
+| Qué quieres cambiar | Archivo |
+| --- | --- |
+| Título grande y subtítulo de la portada | `src/config/GameConfig.ts` → `GAME.TITLE` / `GAME.SUBTITLE` |
+| Título de la **pestaña** del navegador y descripción | `Taller3/index.html` → `<title>` y `<meta name="description">` |
+
+```ts
+// src/config/GameConfig.ts
+export const GAME = {
+  TITLE: 'PARRY',
+  SUBTITLE: 'DUELO DE REACCIÓN',
+} as const;
+```
+
+El título de la portada se ajusta solo si el nombre es más largo (se escala para
+no salirse del lienzo). Recuerda que el `index.html` de la **raíz** es el build:
+no lo edites a mano, se regenera con `npm run publish:pages`.
+
+---
+
 ## Ajustar el balance
 
 Todo vive en `src/config/GameConfig.ts`:

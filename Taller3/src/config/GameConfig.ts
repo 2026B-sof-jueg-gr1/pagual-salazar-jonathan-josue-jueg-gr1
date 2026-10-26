@@ -12,6 +12,23 @@ export const VIEW = {
 } as const;
 
 /* -------------------------------------------------------------------------- */
+/*  MARCA — el nombre del juego                                                */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Nombre que se muestra en la pantalla de inicio.
+ * Cambia estos dos valores y el título de la portada se actualiza solo
+ * (el texto se ajusta automáticamente si es más largo que "PARRY").
+ *
+ * El título de la PESTAÑA del navegador está en `Taller3/index.html`
+ * (`<title>` y `<meta name="description">`), porque eso es HTML estático.
+ */
+export const GAME = {
+  TITLE: 'PARRY',
+  SUBTITLE: 'DUELO DE REACCIÓN',
+} as const;
+
+/* -------------------------------------------------------------------------- */
 /*  BALANCE — todo lo que se toca para ajustar dificultad                      */
 /* -------------------------------------------------------------------------- */
 
