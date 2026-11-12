@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ascenso a la Superficie — Juego en Desarrollo</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════════ NAV ═══════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <span class="brand-accent">//</span> ASCENSO <span class="brand-accent">a la Superficie</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#historia">Historia</a></li>
+      <li><a href="#personajes">Personajes</a></li>
+      <li><a href="#mecanicas">Mecánicas</a></li>
+      <li><a href="#mundo">Mundo</a></li>
+      <li><a href="#finales">Finales</a></li>
+    </ul>
+    <div class="nav-badge">EN DESARROLLO</div>
+  </nav>
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="scanline"></div>
+      <div class="grid-overlay"></div>
+      <div class="particles" id="particles"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="mono">&gt;&gt; PROYECTO GÉNESIS — CLASIFICADO</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="line1">ASCENSO</span>
+        <span class="line2">A LA SUPERFICIE</span>
+      </h1>
+      <p class="hero-sub">
+        Un Metroidvania de acción donde la línea entre el huésped y el parásito<br/>
+        define el destino de un planeta entero.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">Metroidvania</span>
+        <span class="tag">Acción</span>
+        <span class="tag">Sci-Fi</span>
+        <span class="tag">Pixel Art</span>
+        <span class="tag">Narrativa Ramificada</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#historia" class="btn btn-primary">Explorar Historia</a>
+        <a href="#mecanicas" class="btn btn-outline">Ver Mecánicas</a>
+      </div>
+      <div class="hero-status">
+        <div class="status-dot"></div>
+        <span class="mono">Estado: En desarrollo activo · Próxima versión en camino</span>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ HISTORIA ═══════════════════ -->
+  <section class="section" id="historia">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label mono">&gt; LOG_01</span>
+        <h2 class="section-title">La Historia del Mundo</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="lore-timeline">
+
+        <div class="lore-card" data-reveal>
+          <div class="lore-icon">🚀</div>
+          <div class="lore-content">
+            <h3>La Llegada de la Humanidad</h3>
+            <p>
+              La humanidad abandonó la Tierra y colonizó un nuevo planeta habitable con la esperanza de un nuevo comienzo.
+              Durante los primeros años la colonización prosperó: ciudades, centros de investigación agrícola y laboratorios biológicos
+              florecieron. Entre sus científicos más destacados se encontraban los <strong>padres del protagonista</strong>,
+              especializados en la fauna, flora y organismos autóctonos del planeta.
+            </p>
+          </div>
+        </div>
+
+        <div class="lore-card lore-card--danger" data-reveal>
+          <div class="lore-icon">⚠️</div>
+          <div class="lore-content">
+            <h3>El Engaño y la Caída</h3>
+            <p>
+              Los científicos creyeron haber descubierto especies nativas primitivas y capturaron especímenes para estudiarlos.
+              <strong>El gran error:</strong> aquellas criaturas no eran bestias salvajes, sino una especie de inteligencia
+              hiperavanzada que se dejó capturar a propósito para analizar las defensas, debilidades y tecnología humanas.
+              Una vez recopilada toda la información, coordinaron una rebelión global y masacraron a la mayoría de la población.
+            </p>
+          </div>
+        </div>
+
+        <div class="lore-card lore-card--empire" data-reveal>
+          <div class="lore-icon">👑</div>
+          <div class="lore-content">
+            <h3>El Imperio Alienígena</h3>
+            <p>
+              Sobre las ruinas humanas, los alienígenas erigieron una civilización futurista y biomecánica liderada por
+              un gobernante supremo: <strong>El Emperador</strong>. Los supervivientes humanos huyeron al subsuelo,
+              refugiándose en <strong>colonias clandestinas</strong> excavadas en cavernas profundas y aisladas,
+              sin contacto entre sí para evitar ser detectados y exterminados.
+            </p>
+          </div>
+        </div>
+
+        <div class="lore-card lore-card--genesis" data-reveal>
+          <div class="lore-icon">🧬</div>
+          <div class="lore-content">
+            <h3>Proyecto Génesis</h3>
+            <p>
+              Antes de morir, los padres del protagonista crearon en secreto un organismo biomecánico evolutivo usando
+              material genético de los conquistadores alienígenas — diseñado para adaptarse y coexistir con un huésped humano.
+              Este organismo portaba un nexo genético directo con <strong>El Emperador</strong> (su "hermano"),
+              y yació latente en el sistema nervioso del protagonista desde su nacimiento.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Timeline de edad -->
+      <div class="age-timeline" data-reveal>
+        <h3 class="timeline-title mono">&gt;&gt; CRONOLOGÍA DEL PROTAGONISTA</h3>
+        <div class="timeline-track">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">0–16 años</div>
+            <div class="timeline-desc"><strong>Crecimiento en Silencio</strong><br/>El organismo yace latente dentro de su sistema nervioso sin manifestar consciencia.</div>
+          </div>
+          <div class="timeline-connector"></div>
+          <div class="timeline-item">
+            <div class="timeline-dot timeline-dot--active"></div>
+            <div class="timeline-year">17 años</div>
+            <div class="timeline-desc"><strong>El Primer Contacto</strong><br/>Comienza a escuchar una voz interior arrogante. Un año de choques de personalidad y descubrimiento de capacidades alienígenas.</div>
+          </div>
+          <div class="timeline-connector"></div>
+          <div class="timeline-item">
+            <div class="timeline-dot timeline-dot--hero"></div>
+            <div class="timeline-year">18 años</div>
+            <div class="timeline-desc"><strong>El Detonante</strong><br/>Descubre los archivos secretos de sus padres y el <em>Armazón Pectoral</em>. Comienza el ascenso a la superficie.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PERSONAJES ═══════════════════ -->
+  <section class="section section--dark" id="personajes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label mono">&gt; LOG_02</span>
+        <h2 class="section-title">Personajes</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="char-grid">
+
+        <!-- Protagonista -->
+        <div class="char-card" data-reveal>
+          <div class="char-image-wrap">
+            <img src="assets/img/characters.jpg" alt="El Protagonista y El Emperador — sprites de personajes" class="char-img" loading="lazy" />
+            <div class="char-img-overlay">
+              <span class="mono">SPRITES — v0.1</span>
+            </div>
+          </div>
+          <div class="char-info">
+            <div class="char-role mono">[ PROTAGONISTA / HUÉSPED ]</div>
+            <h3 class="char-name">El Humano</h3>
+            <p class="char-desc">
+              Criado en una colonia subterránea bajo el recuerdo de sus padres —mártires y científicos heroicos—.
+              Optimista, empático y resiliente, pero con una profunda vulnerabilidad emocional: las pérdidas pueden
+              quebrar su estabilidad y alterar radicalmente su visión del mundo.
+            </p>
+            <div class="char-traits">
+              <span class="trait trait--blue">Optimista</span>
+              <span class="trait trait--blue">Empático</span>
+              <span class="trait trait--blue">Resiliente</span>
+              <span class="trait trait--blue">Vulnerable</span>
+            </div>
+            <blockquote class="char-quote">
+              "Voy a llegar a la superficie. No para mí — para todos los que quedaron abajo."
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- El Organismo -->
+        <div class="char-card char-card--reverse" data-reveal>
+          <div class="char-image-wrap">
+            <img src="assets/img/bio-alien.jpg" alt="Transformación Bio-Alien del protagonista" class="char-img" loading="lazy" />
+            <div class="char-img-overlay">
+              <span class="mono">SPRITES — TRANSFORMACIÓN BIO-ALIEN</span>
+            </div>
+          </div>
+          <div class="char-info">
+            <div class="char-role mono">[ SIMBIONTE / ORGANISMO ]</div>
+            <h3 class="char-name">El Organismo</h3>
+            <p class="char-desc">
+              Creado en secreto por los padres del protagonista. Orgulloso, arrogante, cínico y sarcástico.
+              Considera a los humanos una especie biológicamente frágil e inferior — pero protege al protagonista
+              por necesidad de supervivencia compartida.
+            </p>
+            <div class="char-traits">
+              <span class="trait trait--red">Orgulloso</span>
+              <span class="trait trait--red">Arrogante</span>
+              <span class="trait trait--red">Cínico</span>
+              <span class="trait trait--red">Leal por Necesidad</span>
+            </div>
+            <blockquote class="char-quote char-quote--red">
+              "Qué deplorable recipiente me ha tocado... pero no dejaré que destruyan mi vehículo."
+            </blockquote>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- El Emperador -->
+      <div class="emperor-card" data-reveal>
+        <div class="emperor-label mono">&gt;&gt; ANTAGONISTA PRINCIPAL</div>
+        <h3 class="emperor-name">El Emperador</h3>
+        <p class="emperor-desc">
+          Gobernante supremo de la civilización alienígena biomecánica. Hermano genético del organismo simbionte.
+          Lidera a sus tres Aliados de Alto Rango desde el Trono de la Superficie — y guarda secretos que
+          podrían cambiar el destino del planeta para siempre.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ MECÁNICAS ═══════════════════ -->
+  <section class="section" id="mecanicas">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label mono">&gt; LOG_03</span>
+        <h2 class="section-title">Mecánicas de Juego</h2>
+        <div class="section-line"></div>
+        <p class="section-sub">Un Metroidvania de acción donde el combate y la exploración evolucionan junto a la historia.</p>
+      </div>
+
+      <div class="mech-grid">
+
+        <div class="mech-card" data-reveal>
+          <div class="mech-icon">⚔️</div>
+          <h3>Combate Cuerpo a Cuerpo</h3>
+          <p>Controla los ataques directos con el teclado. Golpes rápidos y combos usando el Armazón Pectoral como catalizador de energía alienígena.</p>
+          <div class="mech-controls">
+            <span class="control-badge">⌨️ Teclado</span>
+          </div>
+        </div>
+
+        <div class="mech-card" data-reveal>
+          <div class="mech-icon">🔫</div>
+          <h3>Arma del Armazón</h3>
+          <p>El Armazón Pectoral canaliza el poder del organismo en un arma de energía alienígena. Apunta y dispara con precisión total.</p>
+          <div class="mech-controls">
+            <span class="control-badge">🖱️ Mouse</span>
+            <span class="control-badge">🕹️ Joystick Derecho</span>
+          </div>
+        </div>
+
+        <div class="mech-card mech-card--highlight" data-reveal>
+          <div class="mech-icon">🛡️</div>
+          <h3>Sistema de Parry</h3>
+          <p>
+            Contraataca con precisión usando el sistema de parry. Comienza con
+            <strong>4 parries máximos</strong> — la cantidad aumenta conforme avanzas en la historia.
+            Úsalos con sabiduría y espera a que se recarguen.
+          </p>
+          <div class="parry-meter">
+            <div class="parry-slot filled" title="Parry disponible"></div>
+            <div class="parry-slot filled" title="Parry disponible"></div>
+            <div class="parry-slot filled" title="Parry disponible"></div>
+            <div class="parry-slot filled" title="Parry disponible"></div>
+          </div>
+          <div class="mech-controls">
+            <span class="control-badge">⌨️ Teclado</span>
+          </div>
+        </div>
+
+        <div class="mech-card" data-reveal>
+          <div class="mech-icon">💨</div>
+          <h3>Dash de Esquiva</h3>
+          <p>Traversa el peligro con el dash de alta velocidad. Tu principal herramienta de supervivencia para esquivar ataques y reposicionarte en el combate.</p>
+          <div class="mech-controls">
+            <span class="control-badge">⌨️ Teclado</span>
+          </div>
+        </div>
+
+        <div class="mech-card" data-reveal>
+          <div class="mech-icon">🧬</div>
+          <h3>Transformación Bio-Alien</h3>
+          <p>El organismo puede manifestarse en el cuerpo del protagonista, otorgando un conjunto completamente diferente de habilidades y movimientos de combate.</p>
+          <div class="mech-controls">
+            <span class="control-badge">Historia-Dependiente</span>
+          </div>
+        </div>
+
+        <div class="mech-card" data-reveal>
+          <div class="mech-icon">🗺️</div>
+          <h3>Exploración Metroidvania</h3>
+          <p>Mapas interconectados que se abren conforme adquieres nuevas habilidades. Zonas bloqueadas que solo el progreso narrativo puede desbloquear.</p>
+          <div class="mech-controls">
+            <span class="control-badge">Backtracking</span>
+            <span class="control-badge">Habilidades Progresivas</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Control diagram -->
+      <div class="controls-diagram" data-reveal>
+        <h3 class="mono">&gt;&gt; ESQUEMA DE CONTROLES</h3>
+        <div class="controls-layout">
+          <div class="controls-col">
+            <div class="ctrl-group">
+              <div class="ctrl-title">⌨️ TECLADO</div>
+              <div class="ctrl-row"><kbd>WASD</kbd> / <kbd>←↑↓→</kbd> <span>Movimiento</span></div>
+              <div class="ctrl-row"><kbd>ESPACIO</kbd> <span>Salto</span></div>
+              <div class="ctrl-row"><kbd>SHIFT</kbd> <span>Dash de Esquiva</span></div>
+              <div class="ctrl-row"><kbd>J</kbd> / <kbd>Z</kbd> <span>Ataque C. a C.</span></div>
+              <div class="ctrl-row"><kbd>K</kbd> / <kbd>X</kbd> <span>Parry (máx. 4)</span></div>
+            </div>
+          </div>
+          <div class="controls-divider"></div>
+          <div class="controls-col">
+            <div class="ctrl-group">
+              <div class="ctrl-title">🖱️ MOUSE / 🕹️ JOYSTICK DER.</div>
+              <div class="ctrl-row"><span class="ctrl-icon">🎯</span> <span>Apuntar el Arma del Armazón</span></div>
+              <div class="ctrl-row"><span class="ctrl-icon">🔥</span> <span>Disparar</span></div>
+              <div class="ctrl-row"><span class="ctrl-icon">↔️</span> <span>Control de dirección del proyectil</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ MUNDO ═══════════════════ -->
+  <section class="section section--dark" id="mundo">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label mono">&gt; LOG_04</span>
+        <h2 class="section-title">El Mundo</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="world-showcase">
+        <div class="world-image-wrap" data-reveal>
+          <img src="assets/img/world.jpg" alt="Mundo pixel art — biomecánico y subterráneo" class="world-img" loading="lazy" />
+          <div class="world-img-label mono">[ ENTORNO — ESTILO PIXEL ART ]</div>
+        </div>
+
+        <div class="world-structure" data-reveal>
+          <h3 class="mono">&gt;&gt; ESTRUCTURA DE LA TRAVESÍA</h3>
+          <p class="world-intro">El viaje va de abajo hacia arriba: desde las profundidades subterráneas hasta el trono en la superficie.</p>
+
+          <div class="ascent-map">
+            <div class="ascent-level ascent-level--boss">
+              <div class="ascent-label">SUPERFICIE</div>
+              <div class="ascent-name">🏛️ El Trono del Emperador</div>
+              <div class="ascent-desc">El enfrentamiento final. El destino del planeta se decide aquí.</div>
+            </div>
+            <div class="ascent-arrow">▲</div>
+            <div class="ascent-level ascent-level--3">
+              <div class="ascent-num">NIVEL 3</div>
+              <div class="ascent-name">🏛️ Distrito Político — La Consejera</div>
+              <div class="ascent-desc"><em>La Manipulación.</em> Guerra psicológica. Ataca los miedos y pérdidas del protagonista.</div>
+            </div>
+            <div class="ascent-arrow">▲</div>
+            <div class="ascent-level ascent-level--2">
+              <div class="ascent-num">NIVEL 2</div>
+              <div class="ascent-name">🔬 Ciudad Laboratorio — El Científico</div>
+              <div class="ascent-desc"><em>El Conocimiento.</em> Conoce los secretos genéticos de los padres del protagonista.</div>
+            </div>
+            <div class="ascent-arrow">▲</div>
+            <div class="ascent-level ascent-level--1">
+              <div class="ascent-num">NIVEL 1</div>
+              <div class="ascent-name">⚔️ Bastión de Vigilancia — El Comandante</div>
+              <div class="ascent-desc"><em>La Fuerza.</em> Primera gran barrera. Prueba de fuego para el armazón.</div>
+            </div>
+            <div class="ascent-arrow">▲</div>
+            <div class="ascent-level ascent-level--start">
+              <div class="ascent-label">INICIO</div>
+              <div class="ascent-name">🕳️ Colonia Clandestina Subterránea</div>
+              <div class="ascent-desc">El punto de partida. Las profundidades donde el protagonista creció.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FINALES ═══════════════════ -->
+  <section class="section" id="finales">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label mono">&gt; LOG_05</span>
+        <h2 class="section-title">Tres Finales, Un Planeta</h2>
+        <div class="section-line"></div>
+        <p class="section-sub">Las decisiones y el vínculo entre el humano y el organismo determinan el destino de todo.</p>
+      </div>
+
+      <div class="endings-grid">
+
+        <div class="ending-card ending-card--a" data-reveal>
+          <div class="ending-letter">A</div>
+          <h3 class="ending-title">Nueva Sociedad</h3>
+          <div class="ending-subtitle">Simbiosis Verdadera</div>
+          <p class="ending-desc">
+            El humano y el organismo logran empatía genuina. El organismo recupera las memorias de su hermano
+            y decide detener el ciclo de venganza. Perdonan al Emperador y ponen fin a la guerra entre especies.
+          </p>
+          <div class="ending-philosophy">
+            <span class="mono">"La convivencia y el entendimiento mutuo son posibles."</span>
+          </div>
+          <div class="ending-fate">
+            🌍 Nace una civilización mixta de humanos y alienígenas
+          </div>
+        </div>
+
+        <div class="ending-card ending-card--b" data-reveal>
+          <div class="ending-letter">B</div>
+          <h3 class="ending-title">Dominación Absoluta</h3>
+          <div class="ending-subtitle">El Organismo Triunfa</div>
+          <p class="ending-desc">
+            El organismo se impone por completo sobre la psique humana. Toma control total del cuerpo;
+            el protagonista humano desaparece. Con sus recuerdos recuperados, encara al Emperador — su hermano.
+          </p>
+          <div class="ending-philosophy">
+            <span class="mono">"El instinto y la identidad de la especie superior prevalecen."</span>
+          </div>
+          <div class="ending-fate">
+            ❓ El destino queda abierto bajo el designio del organismo
+          </div>
+        </div>
+
+        <div class="ending-card ending-card--c" data-reveal>
+          <div class="ending-letter">C</div>
+          <h3 class="ending-title">Liberación Humana</h3>
+          <div class="ending-subtitle">Rebelión y Ruptura</div>
+          <p class="ending-desc">
+            El protagonista decide erradicar al organismo de su cuerpo. Recupera su anatomía e independencia total.
+            Las armas biomecánicas quedan limitadas, pero lidera a las colonias en un asalto decisivo al trono.
+          </p>
+          <div class="ending-philosophy">
+            <span class="mono">"La humanidad debe luchar por su autodeterminación."</span>
+          </div>
+          <div class="ending-fate">
+            🏳️ Caída del régimen imperial. El planeta se reconstruye.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FOOTER / CTA ═══════════════════ -->
+  <footer class="footer">
+    <div class="footer-bg">
+      <div class="scanline scanline--footer"></div>
+    </div>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-title">
+          <span class="brand-accent">ASCENSO</span> A LA SUPERFICIE
+        </div>
+        <p class="footer-subtitle mono">En desarrollo activo · Próxima versión en camino</p>
+        <div class="footer-tags">
+          <span class="tag">Metroidvania</span>
+          <span class="tag">Pixel Art</span>
+          <span class="tag">Sci-Fi</span>
+          <span class="tag">Narrativa Ramificada</span>
+        </div>
+        <div class="footer-dev mono">
+          <span>// Desarrollado con Phaser · Desplegado en GitHub Pages</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
