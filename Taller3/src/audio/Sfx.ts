@@ -1,9 +1,7 @@
 /**
  * Audio sintetizado con la Web Audio API.
  *
- * No hay ficheros de sonido: todo se genera con osciladores y ruido filtrado.
- * Así el repositorio no necesita assets y el "clang" del parry puede variar
- * de tono según sea perfecto o no.
+ * Los efectos de TwinUs se generan con osciladores y ruido filtrado.
  */
 export class Sfx {
   private ctx: AudioContext | null = null;

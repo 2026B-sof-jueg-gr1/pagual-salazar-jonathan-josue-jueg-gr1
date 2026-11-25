@@ -1,15 +1,18 @@
-# Dependencias y artefactos de build del proyecto Taller3
+# Dependencias y compilaciones
 node_modules/
-Taller3/node_modules/
-Taller3/dist/
-Taller3/.vite/
+/.twinus-work/
+/Taller3/dist/
+/Taller3/dist-twinus/
+/Taller3/dist-site/
+.vite/
+*.tsbuildinfo
+
+# Configuración y archivos locales
 *.local
+.env
+.env.*
+!.env.example
+npm-debug.log*
+.workbuddy-ai/
 .DS_Store
 Thumbs.db
-
-# Datos locales de la herramienta
-.workbuddy-ai/
-
-# Builds de TwinUs
-Taller3/dist-twinus/
-Taller3/dist-site/
