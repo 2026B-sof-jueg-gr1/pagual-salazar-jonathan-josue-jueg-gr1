@@ -9,3 +9,7 @@ Thumbs.db
 
 # Datos locales de la herramienta
 .workbuddy-ai/
+
+# Builds de TwinUs
+Taller3/dist-twinus/
+Taller3/dist-site/

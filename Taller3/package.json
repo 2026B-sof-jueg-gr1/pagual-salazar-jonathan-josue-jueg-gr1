@@ -8,7 +8,11 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "publish:pages": "npm run build && node scripts/publish-root.mjs"
+    "publish:pages": "npm run build && node scripts/publish-root.mjs",
+    "dev:twinus": "vite --config vite.twinus.config.ts",
+    "build:twinus": "tsc --noEmit && vite build --config vite.twinus.config.ts",
+    "build:site": "npm run build:twinus && node scripts/build-site.mjs",
+    "preview:site": "vite preview --outDir dist-site --port 4173 --strictPort"
   },
   "dependencies": {
     "phaser": "^3.90.0"

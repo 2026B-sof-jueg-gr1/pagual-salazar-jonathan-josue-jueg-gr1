@@ -1,3 +1,31 @@
+# TwinUs
+
+Metroidvania 2D de acción biomecánica para navegador. La demo empieza en la colonia humana y termina al atravesar el acceso que abre el Centinela del Umbral.
+
+## Ejecutar TwinUs
+
+```sh
+cd Taller3
+npm ci
+npm run dev:twinus
+```
+
+Vite sirve el juego en http://127.0.0.1:5179/. Los controles están disponibles debajo del lienzo y en la landing.
+
+## Probar la landing con la demo
+
+```sh
+cd Taller3
+npm run build:site
+npm run preview:site
+```
+
+Abre http://localhost:4173/ y pulsa **Jugar demo**. El sitio incluye la demo en `jugar/` y su build se genera en `Taller3/dist-site/`. El workflow de GitHub Pages usa ese mismo build cuando se ejecuta en la rama `main`.
+
+El progreso de TwinUs se conserva al reaparecer durante la partida. El arte del protagonista y del fondo viene de las láminas del GDD. La demo usa poses recortadas, efectos de Phaser y audio sintetizado.
+
+---
+
 # Taller 3 — PARRYZ
 
 Prototipo jugable de **juego de reacción y ritmo** centrado en una única

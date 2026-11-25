@@ -141,6 +141,13 @@ export class Sfx {
     this.noise(0.26, 0.16, 'bandpass', 380, 1900, 1.4);
   }
 
+  /** Pulso del armazón y proyectiles enemigos. */
+  shoot(): void {
+    if (!this.ready) return;
+    this.tone(552, 0.14, 'triangle', 0.1, 215);
+    this.noise(0.09, 0.10, 'bandpass', 2150, 670, 1.25);
+  }
+
   /** Intento fallido del jugador (fricción seca). */
   whiff(): void {
     if (!this.ready) return;

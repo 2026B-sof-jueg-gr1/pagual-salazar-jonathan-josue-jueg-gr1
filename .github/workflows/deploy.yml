@@ -1,4 +1,4 @@
-name: Deploy Landing Page to GitHub Pages
+name: Deploy TwinUs to GitHub Pages
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
@@ -25,14 +25,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: Taller3/package-lock.json
+
+      - name: Build the landing page and playable demo
+        working-directory: Taller3
+        run: |
+          npm ci
+          npm run build:site
+
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload landing page artifact
+      - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Sube solo la subcarpeta landing/ (donde vive index.html)
-          path: 'landing'
+          path: Taller3/dist-site
 
       - name: Deploy to GitHub Pages
         id: deployment

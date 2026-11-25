@@ -1,0 +1,74 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  color: #e8f0f3;
+  background: #090d17;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0 16px 12px; }
+[hidden] { display: none !important; }
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: min(100%, 1180px);
+  margin: auto;
+  min-height: 50px;
+  font-size: .85rem;
+  color: #a8bccc;
+}
+a { color: #a5fff1; text-decoration: none; font-weight: 700; }
+a:hover { text-decoration: underline; }
+.game-shell {
+  width: min(100%, 1180px, calc((100vh - 90px) * 16 / 9));
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+  position: relative;
+  background: #121929;
+  box-shadow: 0 0 0 1px #344955;
+}
+#game { width: 100%; height: 100%; outline: none; }
+#game canvas { display: block; }
+.menu {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding: 16px;
+  overflow: auto;
+  background: radial-gradient(ellipse at 50% 35%, #23304bc7, #060912f7 72%);
+}
+.menu-content { width: min(100%, 520px); text-align: center; }
+h1 { font-size: clamp(1.6rem, 5.4vw, 4.1rem); letter-spacing: -.06em; margin: 0; line-height: 1; }
+p { color: #bcd0dd; margin: 12px 0 19px; }
+.actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+button {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font: inherit;
+  font-weight: 700;
+  background: #83f1dd;
+  color: #102023;
+  cursor: pointer;
+}
+button:disabled { opacity: .66; cursor: wait; }
+button.secondary { background: #172634; border-color: #486477; color: #e5f6fb; }
+button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid #ffbbdc; outline-offset: 3px; }
+.region-list { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 22px; padding-left: 24px; text-align: left; font-size: .85rem; }
+.region-list li { padding: 4px 6px; background: #18293a; color: #88eadf; }
+.region-list li.locked { color: #acbbcf; background: #131a29; }
+.controls { margin: 14px auto 0; width: min(100%, 1180px); color: #a8bccc; font-size: .85rem; }
+summary { cursor: pointer; }
+.controls ul { display: flex; flex-wrap: wrap; gap: 9px 18px; padding: 0; list-style: none; }
+kbd { font: .9em Consolas, monospace; color: #d5f8f3; }
+@media (max-width: 600px) {
+  body { padding-inline: 8px; }
+  .game-shell { min-height: 245px; }
+  .menu { padding: 8px; }
+  .menu p { margin: 7px 0 10px; font-size: .82rem; }
+  .region-list { gap: 3px 14px; margin-block: 6px; font-size: .7rem; }
+}
+
