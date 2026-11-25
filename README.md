@@ -27,6 +27,17 @@ Abre <http://localhost:4173/> y pulsa **Jugar demo**. El sitio estático se gene
 
 ## GitHub Pages
 
-En **Settings → Pages → Build and deployment → Source**, selecciona **GitHub Actions**. El workflow [Deploy TwinUs to GitHub Pages](.github/workflows/deploy.yml) genera y publica el sitio al subir cambios a `main`. También se puede ejecutar desde **Actions → Deploy TwinUs to GitHub Pages → Run workflow**.
+El sitio se publica desde la **raíz de `main`** (Settings → Pages → Build and deployment → Source: **Deploy from a branch** · Branch: `main` · carpeta **/(root)**).
 
-La [página del proyecto](https://2026b-sof-jueg-gr1.github.io/pagual-salazar-jonathan-josue-jueg-gr1/) usa rutas relativas para cargar la landing y la demo bajo el nombre del repositorio.
+Al hacer push a `main`, el workflow [Publicar TwinUs en GitHub Pages](.github/workflows/deploy.yml) compila la landing y la demo, copia el resultado a la raíz del repositorio y lo confirma con `[skip ci]`. No hace falta ejecutar nada a mano.
+
+Para publicar en local:
+
+```sh
+cd Taller3
+npm run publish:pages   # build:site + copia dist-site/ a la raíz
+```
+
+La [página del proyecto](https://2026b-sof-jueg-gr1.github.io/pagual-salazar-jonathan-josue-jueg-gr1/) sirve la landing en la raíz y la demo en `jugar/`, con rutas relativas.
+
+> El repositorio se renombró de `...jueg-gr3` a `...jueg-gr1`, así que la URL antigua ya no existe. Usa siempre la URL nueva.

@@ -8,6 +8,7 @@
     "dev:twinus": "vite --config vite.twinus.config.ts",
     "build:twinus": "tsc --noEmit && vite build --config vite.twinus.config.ts",
     "build:site": "npm run build:twinus && node scripts/build-site.mjs",
+    "publish:pages": "npm run build:site && node scripts/publish-root.mjs",
     "preview:site": "vite preview --outDir dist-site --port 4173 --strictPort"
   },
   "dependencies": {

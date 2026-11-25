@@ -1,4 +1,11 @@
-name: Deploy TwinUs to GitHub Pages
+name: Publicar TwinUs en GitHub Pages
+
+# GitHub Pages está configurado como "Deploy from a branch" → main → /(root).
+# Por eso este workflow compila el sitio y lo confirma en la raíz del repo.
+#
+# Si algún día cambias la fuente de Pages a "GitHub Actions"
+# (Settings → Pages → Build and deployment → Source), avísame: habría que
+# volver al despliegue por artefacto con actions/deploy-pages.
 
 on:
   push:
@@ -7,45 +14,44 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: publish-pages
+  cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 22
           cache: npm
           cache-dependency-path: Taller3/package-lock.json
 
-      - name: Build the landing page and playable demo
+      - name: Build landing + playable demo
         working-directory: Taller3
         run: |
           npm ci
           npm run build:site
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v6
+      - name: Publish build to repository root
+        working-directory: Taller3
+        run: node scripts/publish-root.mjs
 
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: Taller3/dist-site
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+      - name: Commit and push published site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Sin cambios que publicar."
+          else
+            git commit -m "build: publicar sitio TwinUs [skip ci]"
+            git push
+          fi
