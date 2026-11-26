@@ -93,6 +93,8 @@ export class TwinUsScene extends Phaser.Scene {
   private keys!: Record<keyof typeof CONTROLS, Key>;
   private readonly sfx = new Sfx();
   private readonly aim = new Phaser.Math.Vector2();
+  private nextGhost = 0;
+  private parryFlash = 0;
 
   constructor(private readonly showMenu: (mode: Mode, visited: number) => void) {
     super('TwinUs');
@@ -118,6 +120,8 @@ export class TwinUsScene extends Phaser.Scene {
     this.zone = 0;
     this.message = '';
     this.messageEnd = 0;
+    this.nextGhost = 0;
+    this.parryFlash = 0;
     this.shots = [];
     this.markers = [];
 
@@ -150,6 +154,7 @@ export class TwinUsScene extends Phaser.Scene {
     this.enemies = [];
     this.resetEncounter();
     this.createMarkers();
+    this.createAmbience();
 
     const keyboard = this.input.keyboard;
     if (!keyboard) throw new Error('TwinUs requiere teclado.');
@@ -237,10 +242,18 @@ export class TwinUsScene extends Phaser.Scene {
       this.sfx.clang(true);
       this.notice('Melee potenciado · armazón desactivado');
     }
-    if (pressed(this.keys.parry) && this.parries > 0 && this.now >= this.parryReady) {
-      this.parryEnd = this.now + BALANCE.parryWindow;
-      this.parryReady = this.now + BALANCE.parryCooldown;
-      this.sfx.whiff();
+    if (pressed(this.keys.parry)) {
+      if (this.parries > 0 && this.now >= this.parryReady) {
+        this.parryEnd = this.now + BALANCE.parryWindow;
+        this.parryReady = this.now + BALANCE.parryCooldown;
+        this.parryFlash = this.now + BALANCE.parryWindow;
+        this.sfx.whiff();
+        this.shieldSpark(this.anchor.x, this.anchor.y - 24);
+      } else {
+        // Sin cargas o en recarga: aviso seco, sin coste adicional.
+        this.sfx.tick();
+        this.notice(this.parries > 0 ? 'Parry en recarga' : 'Sin cargas de parry · usa Shift para esquivar', 900);
+      }
     }
     if (this.now < this.dashEnd) return;
     this.body.setAllowGravity(true);
@@ -452,19 +465,27 @@ export class TwinUsScene extends Phaser.Scene {
 
     if (enemy.hp <= 0) return;
     const telegraph = enemy.phase === 'windup';
+    const windup = telegraph ? Phaser.Math.Clamp(1 - (enemy.next - this.now) / 670, 0, 1) : 0;
     const parryMoment = telegraph && enemy.next - this.now < BALANCE.parryWindow * .78;
     const color = enemy.recoil > this.now ? 0xffffff : parryMoment ? 0xffe1ad : telegraph ? 0xffad6e
       : enemy.phase === 'shield' ? 0x75c5ff : boss ? 0xe375ac : 0xf4a56d;
     const stride = Math.sin(this.now / 65) * (enemy.body.velocity.x === 0 ? 0 : 4);
     enemy.art.setPosition(enemy.anchor.x, enemy.body.bottom);
-    drawEnemy(enemy.art, enemy.kind, enemy.facing, color, stride);
-    if (telegraph) {
-      const s = boss ? 1.58 : 1;
-      enemy.art.lineStyle(2, color, .92).strokeCircle(0, -51, parryMoment ? 35 : 43);
-      enemy.art.fillStyle(color).fillRect(-20, -92, Math.max(1, 40 * (1 - (enemy.next - this.now) / 670)), s * 2);
-    }
-    enemy.art.fillStyle(0x142030).fillRect(-18, -85, 36, 3)
-      .fillStyle(color).fillRect(-18, -85, 36 * enemy.hp / enemy.maxHp, 3);
+    drawEnemy(enemy.art, {
+      kind: enemy.kind,
+      facing: enemy.facing,
+      accent: color,
+      stride,
+      recoil: enemy.recoil > this.now,
+      windup,
+      shield: enemy.phase === 'shield',
+      now: this.now,
+    });
+    this.drawTelegraph(enemy, windup, parryMoment, color);
+
+    const barY = boss ? -152 : -96;
+    enemy.art.fillStyle(0x0a1522, .85).fillRect(-20, barY, 40, 4)
+      .fillStyle(color).fillRect(-20, barY, 40 * enemy.hp / enemy.maxHp, 4);
   }
 
   private enemyMove(enemy: Enemy, dx: number): number {
@@ -486,9 +507,13 @@ export class TwinUsScene extends Phaser.Scene {
       if (this.parries === BALANCE.parries) this.nextCharge = this.now + BALANCE.parryRecharge;
       this.parries--;
       this.parryEnd = 0;
+      this.parryFlash = this.now + 180;
       this.invulnerable = this.now + 145;
       this.sfx.clang(true);
-      this.cameras.main.shake(103, .004);
+      this.cameras.main.flash(70, 190, 255, 250);
+      this.cameras.main.shake(120, 0.006);
+      this.parryBurst(this.anchor.x, this.anchor.y - 24);
+      this.floatText(this.anchor.x, this.anchor.y - 96, '¡PARRY!', 0xbafff9, 22);
       this.notice('¡PARRY!', 500);
       return true;
     }
@@ -627,13 +652,66 @@ export class TwinUsScene extends Phaser.Scene {
       .setPosition(x + (swing && !this.frenzied ? this.facing * 15 : 0), this.body.bottom + step * 2)
       .setAlpha(this.now < this.invulnerable && Math.floor(this.now / 62) % 2 === 0 ? .57 : 1);
     const g = this.effects.clear();
-    if (this.frenzied || dashing) g.fillStyle(this.frenzied ? 0xf674b6 : 0x53dce2, .35).fillEllipse(x - (dashing ? this.facing * 30 : 0), y, dashing ? 116 : 87, 55);
-    if (swing) {
-      g.lineStyle(this.frenzied ? 8 : 5, this.frenzied ? 0xff90c7 : 0x9bfafa, .85).beginPath();
-      const angle = this.facing > 0 ? 0 : Math.PI;
-      g.arc(x, y, this.frenzied ? 88 : 69, angle - .7, angle + .7).strokePath();
+    const feet = this.body.bottom;
+
+    // Sombra de contacto: ancla al personaje al suelo.
+    g.fillStyle(0x04070c, 0.45).fillEllipse(x, feet, 44, 10);
+
+    if (this.frenzied || dashing) {
+      g.fillStyle(this.frenzied ? 0xf674b6 : 0x53dce2, 0.32)
+        .fillEllipse(x - (dashing ? this.facing * 30 : 0), y, dashing ? 116 : 87, 55);
     }
-    if (this.now < this.parryEnd) g.lineStyle(3, 0xcafff8, .9).strokeCircle(x, y, 41);
+    if (swing) {
+      g.lineStyle(this.frenzied ? 8 : 5, this.frenzied ? 0xff90c7 : 0x9bfafa, 0.85).beginPath();
+      const angle = this.facing > 0 ? 0 : Math.PI;
+      g.arc(x, y, this.frenzied ? 88 : 69, angle - 0.7, angle + 0.7).strokePath();
+    }
+
+    // Escudo de parry: doble anillo y arcos giratorios durante la ventana.
+    if (this.now < this.parryEnd) {
+      const pulse = 1 + Math.sin(this.now / 40) * 0.04;
+      const radius = 41 * pulse;
+      g.lineStyle(9, 0x2f7f86, 0.3).strokeCircle(x, y, radius + 1);
+      g.lineStyle(3, 0xcafff8, 1).strokeCircle(x, y, radius);
+      g.lineStyle(1, 0xffffff, 0.9).strokeCircle(x, y, radius - 3);
+      g.lineStyle(4, 0xffffff, 0.7);
+      for (let i = 0; i < 3; i++) {
+        const start = this.now / 520 + i * (Math.PI * 2 / 3);
+        g.beginPath();
+        g.arc(x, y, radius + 6, start, start + 0.55);
+        g.strokePath();
+      }
+    } else if (this.parryFlash > this.now) {
+      g.lineStyle(3, 0xffffff, 0.7).strokeCircle(x, y, 46);
+    }
+
+    // Recarga de cargas de parry alrededor del personaje.
+    if (this.parries < BALANCE.parries) {
+      const p = Phaser.Math.Clamp(1 - (this.nextCharge - this.now) / BALANCE.parryRecharge, 0, 1);
+      g.lineStyle(2, 0x4c7f8e, 0.55);
+      g.beginPath();
+      g.arc(x, y, 52, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * p);
+      g.strokePath();
+    }
+
+    // Núcleo del armazón latiendo en el pecho.
+    if (this.weapon && !this.frenzied) {
+      const glow = 0.45 + Math.sin(this.now / 180) * 0.2;
+      g.fillStyle(WEAPONS[this.weapon].color, glow).fillCircle(x + this.facing * 3, feet - 46, 3.4);
+    }
+
+    // Estela del dash.
+    if (dashing && this.now >= this.nextGhost) {
+      this.nextGhost = this.now + 45;
+      const ghost = this.add.image(this.hero.x, this.hero.y, this.hero.texture.key)
+        .setOrigin(this.hero.originX, this.hero.originY)
+        .setScale(this.hero.scaleX, this.hero.scaleY)
+        .setFlipX(this.hero.flipX)
+        .setTint(0x53dce2)
+        .setAlpha(0.34)
+        .setDepth(7);
+      this.tweens.add({ targets: ghost, alpha: 0, duration: 240, onComplete: () => ghost.destroy() });
+    }
 
     const aim = this.aimArt.clear();
     if (!this.weapon || this.frenzied) return;
@@ -645,6 +723,140 @@ export class TwinUsScene extends Phaser.Scene {
     aim.lineStyle(1.5, color, .94).strokeCircle(this.aim.x, this.aim.y, 9)
       .lineBetween(this.aim.x - 13, this.aim.y, this.aim.x - 5, this.aim.y)
       .lineBetween(this.aim.x + 5, this.aim.y, this.aim.x + 13, this.aim.y);
+  }
+
+  /** Aviso de ataque diferenciado por tipo de enemigo (GDD §6.1). */
+  private drawTelegraph(enemy: Enemy, windup: number, parryMoment: boolean, color: number): void {
+    if (enemy.phase !== 'windup') return;
+    const g = enemy.art;
+    const boss = enemy.kind === 'boss';
+    const cy = boss ? -86 : -46;
+
+    // Anillo que se cierra sobre el enemigo.
+    const radius = Phaser.Math.Linear(54, 31, windup);
+    g.lineStyle(2, color, parryMoment ? 0.95 : 0.32 + windup * 0.45);
+    g.strokeCircle(0, cy, radius);
+
+    // Arco brillante en el instante exacto del parry.
+    if (parryMoment) {
+      g.lineStyle(4, 0xffffff, 0.9);
+      g.beginPath();
+      g.arc(0, cy, radius + 5, -Math.PI / 2 - 0.75, -Math.PI / 2 + 0.75);
+      g.strokePath();
+    }
+
+    // Marca en el suelo: los jefes avisan con un anillo más amplio.
+    g.lineStyle(2, color, 0.18 + windup * 0.3);
+    g.strokeEllipse(0, -3, (boss ? 62 : 44) + windup * 22, (boss ? 14 : 10) + windup * 5);
+
+    // El tirador traza su línea de mira antes de disparar.
+    if (enemy.kind === 'shooter') {
+      const lx = (this.anchor.x - enemy.anchor.x) * enemy.facing;
+      const ly = this.anchor.y - 10 - enemy.body.bottom;
+      g.lineStyle(1, color, 0.16 + windup * 0.4);
+      g.lineBetween(8, -50, lx, ly);
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Efectos                                                            */
+  /* ------------------------------------------------------------------ */
+
+  private parryBurst(x: number, y: number): void {
+    this.shockwave(x, y, 0xbafff9, 1.9);
+    for (let i = 0; i < 14; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 26 + Math.random() * 64;
+      const spark = this.add.rectangle(x, y, 2 + Math.random() * 3, 2 + Math.random() * 3, 0xd8fffb, 0.95)
+        .setDepth(30).setRotation(angle);
+      this.tweens.add({
+        targets: spark,
+        x: x + Math.cos(angle) * distance,
+        y: y + Math.sin(angle) * distance,
+        alpha: 0,
+        scaleX: 0.2,
+        scaleY: 0.2,
+        duration: 260 + Math.random() * 220,
+        ease: 'Cubic.out',
+        onComplete: () => spark.destroy(),
+      });
+    }
+  }
+
+  private shieldSpark(x: number, y: number): void {
+    for (let i = 0; i < 5; i++) {
+      const angle = -Math.PI / 2 + (Math.random() - 0.5) * 2.2;
+      const spark = this.add.rectangle(x, y, 2, 2, 0x9bfafa, 0.9).setDepth(30);
+      this.tweens.add({
+        targets: spark,
+        x: x + Math.cos(angle) * (16 + Math.random() * 22),
+        y: y + Math.sin(angle) * (16 + Math.random() * 22),
+        alpha: 0,
+        duration: 220 + Math.random() * 160,
+        ease: 'Quad.out',
+        onComplete: () => spark.destroy(),
+      });
+    }
+  }
+
+  private shockwave(x: number, y: number, color: number, scale: number): void {
+    const ring = this.add.circle(x, y, 20, 0x000000, 0)
+      .setStrokeStyle(3, color, 0.95).setDepth(29).setScale(0.45);
+    this.tweens.add({
+      targets: ring,
+      scale,
+      alpha: 0,
+      duration: 320,
+      ease: 'Cubic.out',
+      onComplete: () => ring.destroy(),
+    });
+  }
+
+  private floatText(x: number, y: number, text: string, color: number, size: number): void {
+    const label = this.add.text(x, y, text, {
+      fontFamily: 'Consolas, monospace',
+      fontSize: size + 'px',
+      color: '#' + color.toString(16).padStart(6, '0'),
+      fontStyle: 'bold',
+    }).setOrigin(0.5).setDepth(31)
+      .setStroke('#06101a', 3)
+      .setShadow(0, 2, '#000000', 5, true, true);
+    this.tweens.add({
+      targets: label,
+      y: y - 42,
+      duration: 700,
+      ease: 'Cubic.out',
+    });
+    this.tweens.add({
+      targets: label,
+      alpha: 0,
+      delay: 300,
+      duration: 380,
+      onComplete: () => label.destroy(),
+    });
+  }
+
+  /** Motas de polvo bioluminiscente para dar vida a las galerías. */
+  private createAmbience(): void {
+    for (let i = 0; i < 26; i++) {
+      const x = Phaser.Math.Between(0, WORLD.width);
+      const y = Phaser.Math.Between(140, WORLD.floor - 30);
+      const mote = this.add
+        .circle(x, y, Phaser.Math.FloatBetween(0.9, 1.9), 0x9fe8f0, Phaser.Math.FloatBetween(0.1, 0.32))
+        .setDepth(-5)
+        .setBlendMode(Phaser.BlendModes.ADD);
+      this.tweens.add({
+        targets: mote,
+        y: y - Phaser.Math.Between(50, 120),
+        x: x + Phaser.Math.Between(-50, 50),
+        alpha: 0.05,
+        duration: Phaser.Math.Between(4200, 9000),
+        delay: Phaser.Math.Between(0, 3200),
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.inOut',
+      });
+    }
   }
 
   private renderHud(): void {
